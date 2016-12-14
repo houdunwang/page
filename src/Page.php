@@ -77,6 +77,8 @@ class Page {
 		$this->selfPage();
 		//基本uri
 		$this->setUrl();
+
+		return $this->show();
 	}
 
 	/**
@@ -92,7 +94,7 @@ class Page {
 	}
 
 	//返回所有分页信息
-	public function all( $total ) {
+	public function all() {
 		$show            = [ ];
 		$show['count']   = $this->count();
 		$show['first']   = $this->first();
@@ -139,14 +141,8 @@ class Page {
 				$url .= "$k=$v&";
 			}
 		}
-		//GET访问模型
-		if ( defined( 'MODULE' ) ) {
-			$url = "?{$url}page={page}";
-		} else {
-			//路由访问模式
-			$url = __URL__ . "?{$url}page={page}";
-		}
-		$this->url = $url;
+
+		return $this->url = "?{$url}page={page}";
 	}
 
 	//获取URL地址
@@ -167,9 +163,9 @@ class Page {
 	/**
 	 * 定义url
 	 *
-	 * @param  [type] $url [description]
+	 * @param string $url
 	 *
-	 * @return [type]      [description]
+	 * @return $this
 	 */
 	public function url( $url ) {
 		$this->url = $url;
@@ -180,9 +176,9 @@ class Page {
 	/**
 	 * 描述文字
 	 *
-	 * @param  [type] $desc [description]
+	 * @param array $desc
 	 *
-	 * @return [type]       [description]
+	 * @return $this
 	 */
 	public function desc( array $desc = [ ] ) {
 		$this->desc = $desc;
@@ -228,7 +224,7 @@ class Page {
 		if ( $end == 1 ) {
 			return [ ];
 		}
-		for ( $i = $start;$i <= $end;$i ++ ) {
+		for ( $i = $start; $i <= $end; $i ++ ) {
 			if ( $this->selfPage == $i ) {
 				$pageList [ $i ] ['url'] = '';
 				$pageList [ $i ] ['str'] = $i;
