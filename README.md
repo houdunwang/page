@@ -14,12 +14,12 @@ composer require houdunwang/page
 
 ####根据数量获取分页
 ```
-echo \houdunwang\page\Page::make(100);
+\houdunwang\page\Page::make(100);
 ```
 
 ####显示分页
 ```
-echo \houdunwang\page\Page::show();
+\houdunwang\page\Page::show();
 ```
 
 ####获取所有分页属性
@@ -27,8 +27,8 @@ echo \houdunwang\page\Page::show();
 ```
 \houdunwang\page\Page::all(100);
 ```
-####设置每页显示条数
 
+####设置每页显示条数
 ```
 \houdunwang\page\Page::row(8)->make(100);
 ```
@@ -40,12 +40,12 @@ echo \houdunwang\page\Page::show();
 
 ####自定义url
 ```
-echo \houdunwang\page\Page::url('list/{page}.html')->make(100,1);
+\houdunwang\page\Page::url('list/{page}.html')->make(100,1);
 ```
 
 ####定义显示文字
 ```
-echo \houdunwang\page\Page::desc(['pre'=>'上楼', 'next'=>'下楼','first'=>'首页','end'=>'尾页','unit'=>'个'])->make(200,2);
+\houdunwang\page\Page::desc(['pre'=>'上楼', 'next'=>'下楼','first'=>'首页','end'=>'尾页','unit'=>'个'])->make(200,2);
 ```
 
 ####返回limit语句
@@ -55,8 +55,7 @@ echo \houdunwang\page\Page::desc(['pre'=>'上楼', 'next'=>'下楼','first'=>'�
 
 ####取得所有形式用于定义
 ```
-$info= \houdunwang\page\Page::all(200);
-print_r($info);
+\houdunwang\page\Page::all(200);
 ```
 
 ####获取分页的总页数

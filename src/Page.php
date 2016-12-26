@@ -17,6 +17,7 @@ class Page {
 	//更改缓存驱动
 	public function driver() {
 		$this->link = new Base( $this );
+
 		return $this;
 	}
 
@@ -29,11 +30,6 @@ class Page {
 	}
 
 	public static function __callStatic( $name, $arguments ) {
-		static $link = null;
-		if ( is_null( $link ) ) {
-			$link = new static();
-		}
-
-		return call_user_func_array( [ $link, $name ], $arguments );
+		return call_user_func_array( [ new static(), $name ], $arguments );
 	}
 }
