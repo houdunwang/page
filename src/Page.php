@@ -12,7 +12,7 @@ namespace houdunwang\page;
 use houdunwang\page\build\Base;
 
 class Page {
-	protected $link;
+	protected $link = null;
 
 	//更改缓存驱动
 	public function driver() {
