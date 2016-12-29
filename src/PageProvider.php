@@ -9,9 +9,9 @@
  * '-------------------------------------------------------------------*/
 namespace houdunwang\page;
 
-use hdphp\kernel\ServiceProvider;
+use houdunwang\framework\build\Provider;
 
-class PageProvider extends ServiceProvider {
+class PageProvider extends Provider {
 
 	//延迟加载
 	public $defer = true;

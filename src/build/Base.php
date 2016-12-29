@@ -9,6 +9,8 @@
  * '-------------------------------------------------------------------*/
 namespace houdunwang\page\build;
 
+use houdunwang\arr\Arr;
+
 class Base {
 	//总条数
 	protected $totalRow;
@@ -26,6 +28,9 @@ class Base {
 	protected $desc = [ 'pre' => '上一页', 'next' => '下一页', 'first' => '首页', 'end' => '尾页', 'unit' => '条' ];
 	//前页页码显示样式
 	protected $show;
+	//配置
+	protected $config;
+
 	/**
 	 * 显示条数
 	 *
