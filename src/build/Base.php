@@ -9,8 +9,6 @@
  * '-------------------------------------------------------------------*/
 namespace houdunwang\page\build;
 
-use houdunwang\arr\Arr;
-
 class Base {
 	//总条数
 	protected $totalRow;
