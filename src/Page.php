@@ -18,8 +18,6 @@ class Page {
 	//更改缓存驱动
 	public function driver() {
 		$this->link = new Base();
-		$this->link->config( );
-
 		return $this;
 	}
 
