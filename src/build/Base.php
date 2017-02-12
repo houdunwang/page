@@ -108,7 +108,7 @@ class Base {
 
 	//当前页
 	private function selfPage() {
-		$self           = empty( $_GET['page'] ) ? 1 : max( 1, intval( $_GET['page'] ) );
+		$self = max(Request::get('page',1),1);
 		$this->selfPage = min( $this->totalPage, $self );
 	}
 
