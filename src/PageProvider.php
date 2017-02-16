@@ -21,7 +21,7 @@ class PageProvider extends Provider {
 
 	public function register() {
 		$this->app->single( 'Page', function ( $app ) {
-			return new Page( $app );
+			return Page::single( $app );
 		} );
 	}
 }
