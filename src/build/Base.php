@@ -10,6 +10,8 @@
 
 namespace houdunwang\page\build;
 
+use houdunwang\request\Request;
+
 class Base
 {
     //总条数
@@ -148,7 +150,7 @@ class Base
         }
 
         $url = '';
-        foreach ((array)$_GET as $k => $v) {
+        foreach ((array)Request::get() as $k => $v) {
             if ($k != 'page') {
                 $url .= "$k=$v&";
             }
