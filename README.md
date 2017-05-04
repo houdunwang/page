@@ -12,53 +12,53 @@ composer require houdunwang/page
 ```
 > HDPHP 框架已经内置此组件，无需要安装
 
-####根据数量获取分页
+####根据数量显示分页
 ```
-\houdunwang\page\Page::make(100);
+Page::make(100);
 ```
 
 ####显示分页
 ```
-\houdunwang\page\Page::show();
+Page::show();
 ```
 
 ####获取所有分页属性
 可以获取分页属性，如 文字页码、图形页码、下拉列表页码等
 ```
-\houdunwang\page\Page::all(100);
+Page::all(100);
 ```
 
 ####设置每页显示条数
 ```
-\houdunwang\page\Page::row(8)->make(100);
+Page::row(8)->make(100);
 ```
 
 ####设置页码数量
 ```
-\houdunwang\page\Page::pageNum(5)->make(100);
+Page::pageNum(5)->make(100);
 ```
 
 ####自定义url
 ```
-\houdunwang\page\Page::url('list/{page}.html')->make(100,1);
+Page::url('list/{page}.html')->make(100,1);
 ```
 
 ####定义显示文字
 ```
-\houdunwang\page\Page::desc(['pre'=>'上楼', 'next'=>'下楼','first'=>'首页','end'=>'尾页','unit'=>'个'])->make(200,2);
+Page::desc(['pre'=>'上楼', 'next'=>'下楼','first'=>'首页','end'=>'尾页','unit'=>'个'])->make(200,2);
 ```
 
 ####返回limit语句
 ```
-\houdunwang\page\Page::limit();
+Page::limit();
 ```
 
 ####取得所有形式用于定义
 ```
-\houdunwang\page\Page::all(200);
+Page::all(200);
 ```
 
 ####获取分页的总页数
 ```
-\houdunwang\page\Page::totalPage();
+Page::totalPage();
 ```
