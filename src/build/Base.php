@@ -96,7 +96,7 @@ class Base
     {
         if ($this->totalPage > 1) {
             return '<nav><ul class="pagination">'.$this->pre().$this->strList()
-                .$this->next().'</ul></nav>';
+                   .$this->next().'</ul></nav>';
         } else {
             return '';
         }
@@ -135,13 +135,21 @@ class Base
         return $this->totalPage = ceil($this->totalRow / $this->row);
     }
 
-    //获取总页数
+    /**
+     * 获取总页数
+     *
+     * @return mixed
+     */
     public function getTotalPage()
     {
         return $this->totalPage;
     }
 
-    //配置URL地址
+    /**
+     * 配置URL地址
+     *
+     * @return string|void
+     */
     private function setUrl()
     {
         //自定义了url时不进行处理
@@ -220,7 +228,7 @@ class Base
     {
         if ($this->selfPage > 1 && $this->selfPage <= $this->totalPage) {
             return "<li><a href='".$this->getUrl($this->selfPage - 1)
-                ."' class='pre'>{$this->desc['pre']}</a></li>";
+                   ."' class='pre'>{$this->desc['pre']}</a></li>";
         }
 
         return $this->totalPage
@@ -234,7 +242,7 @@ class Base
         $next = $this->desc['next'];
         if ($this->selfPage < $this->totalPage) {
             return "<li><a href='".$this->getUrl($this->selfPage + 1)
-                ."' class='next'>{$next}</a></li>";
+                   ."' class='next'>{$next}</a></li>";
         }
 
         return $this->totalPage
@@ -293,11 +301,11 @@ class Base
         $first = $this->selfPage == 1
             ? ""
             : "<a href='".$this->getUrl(1)
-            ."' class='picList'><span><<</span></a>";
+              ."' class='picList'><span><<</span></a>";
         $end   = $this->selfPage >= $this->totalPage
             ? ""
             : "<a href='".$this->getUrl($this->totalPage)
-            ."'  class='picList'><span>>></span></a>";
+              ."'  class='picList'><span>>></span></a>";
         $pre   = $this->selfPage <= 1
             ? ""
             : "<a href='".$this->getUrl(
@@ -306,7 +314,7 @@ class Base
         $next  = $this->selfPage >= $this->totalPage
             ? ""
             : "<a href='".$this->getUrl($this->selfPage + 1)
-            ."'  class='picList'><span>></span></a>";
+              ."'  class='picList'><span>></span></a>";
 
         return $first.$pre.$next.$end;
     }
@@ -366,7 +374,7 @@ class Base
 
         return $this->selfPage + $this->pageNum < $this->totalPage
             ? "<li><a href='".$this->getUrl($num)
-            ."' class='nexts'>后{$this->pageNum}页</a></li>" : "";
+              ."' class='nexts'>后{$this->pageNum}页</a></li>" : "";
     }
 
     //首页
@@ -385,7 +393,7 @@ class Base
         $end = $this->desc ['end'];
 
         return $this->selfPage < $this->totalPage - $this->pageNum ? "<a href='"
-            .$this->getUrl($this->totalPage)."' class='end'>{$end}</a>" : "";
+                                                                     .$this->getUrl($this->totalPage)."' class='end'>{$end}</a>" : "";
     }
 
     //n-m页
