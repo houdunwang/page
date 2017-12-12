@@ -95,8 +95,7 @@ class Base
     public function show()
     {
         if ($this->totalPage > 1) {
-            return '<nav><ul class="pagination">'.$this->pre().$this->strList()
-                   .$this->next().'</ul></nav>';
+            return '<nav><ul class="pagination">'.$this->pre().$this->strList().$this->next().'</ul></nav>';
         } else {
             return '';
         }
@@ -241,8 +240,8 @@ class Base
     {
         $next = $this->desc['next'];
         if ($this->selfPage < $this->totalPage) {
-            return "<li><a href='".$this->getUrl($this->selfPage + 1)
-                   ."' class='next'>{$next}</a></li>";
+            $num = $this->selfPage + 1;
+            return "<li><a page='{$num}' href='".$this->getUrl($num)."' class='next'>{$next}</a></li>";
         }
 
         return $this->totalPage
@@ -252,9 +251,7 @@ class Base
     //列表项
     public function pageList()
     {
-        $start = max(
-            1,
-            min(
+        $start = max(1, min(
                 $this->selfPage - ceil($this->pageNum / 2),
                 $this->totalPage - $this->pageNum
             )
@@ -286,8 +283,7 @@ class Base
 
         $str = '';
         foreach ($arr as $v) {
-            $str .= empty($v['url'])
-                ? "<li class='active'><a href='{$v['url']}'>{$v['str']}</a></li>"
+            $str .= empty($v['url']) ? "<li class='active'><a page='{$v['str']}' href='{$v['url']}'>{$v['str']}</a></li>"
                 : "<li><a href='{$v['url']}'>{$v['str']}</a></li>";
         }
 
@@ -382,9 +378,7 @@ class Base
     {
         $first = $this->desc ['first'];
 
-        return $this->selfPage - $this->pageNum > 1 ? "<a href='".$this->getUrl(
-                1
-            )." class='first'>{$first}</a>" : "";
+        return $this->selfPage - $this->pageNum > 1 ? "<a page='1' href='".$this->getUrl(1)." class='first'>{$first}</a>" : "";
     }
 
     //末页
@@ -392,8 +386,8 @@ class Base
     {
         $end = $this->desc ['end'];
 
-        return $this->selfPage < $this->totalPage - $this->pageNum ? "<a href='"
-                                                                     .$this->getUrl($this->totalPage)."' class='end'>{$end}</a>" : "";
+        return $this->selfPage < $this->totalPage - $this->pageNum ?
+            "<a href='".$this->getUrl($this->totalPage)."' class='end' page='{$this->totalPage}'>{$end}</a>" : "";
     }
 
     //n-m页
