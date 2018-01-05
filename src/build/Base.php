@@ -84,7 +84,7 @@ class Base
         //基本uri
         $this->setUrl();
 
-        return $this->show();
+        return $this;
     }
 
     /**
@@ -219,20 +219,17 @@ class Base
      */
     public function limit()
     {
-        return max(0, ($this->selfPage - 1) * $this->row).",".$this->row;
+        return max(0, (Request::get('page', 1) - 1) * $this->row).",".$this->row;
     }
 
     //上一页
     public function pre()
     {
         if ($this->selfPage > 1 && $this->selfPage <= $this->totalPage) {
-            return "<li><a href='".$this->getUrl($this->selfPage - 1)
-                   ."' class='pre'>{$this->desc['pre']}</a></li>";
+            return "<li><a href='".$this->getUrl($this->selfPage - 1)."' class='pre'>{$this->desc['pre']}</a></li>";
         }
 
-        return $this->totalPage
-            ? "<li class='disabled'><span>{$this->desc['pre']}</span></li>"
-            : '';
+        return $this->totalPage ? "<li class='disabled'><span>{$this->desc['pre']}</span></li>" : '';
     }
 
     //下一页
@@ -241,23 +238,23 @@ class Base
         $next = $this->desc['next'];
         if ($this->selfPage < $this->totalPage) {
             $num = $this->selfPage + 1;
+
             return "<li><a page='{$num}' href='".$this->getUrl($num)."' class='next'>{$next}</a></li>";
         }
 
-        return $this->totalPage
-            ? "<li class='disabled'><span>{$next}</span></li>" : '';
+        return $this->totalPage ? "<li class='disabled'><span>{$next}</span></li>" : '';
+    }
+
+    public function __toString()
+    {
+        return $this->show();
     }
 
     //列表项
     public function pageList()
     {
-        $start = max(1, min(
-                $this->selfPage - ceil($this->pageNum / 2),
-                $this->totalPage - $this->pageNum
-            )
-        );
-        $end   = min($this->pageNum + $start, $this->totalPage);
-
+        $start    = max(1, min($this->selfPage - ceil($this->pageNum / 2), $this->totalPage - $this->pageNum));
+        $end      = min($this->pageNum + $start, $this->totalPage);
         $pageList = [];
         //只有一页不显示页码
         if ($end == 1) {
@@ -280,14 +277,52 @@ class Base
     public function strList()
     {
         $arr = $this->pageList();
-
         $str = '';
         foreach ($arr as $v) {
-            $str .= empty($v['url']) ? "<li class='active'><a page='{$v['str']}' href='{$v['url']}'>{$v['str']}</a></li>"
+            $str .= empty($v['url']) ?
+                "<li class='active'><a page='{$v['str']}' href='{$v['url']}'>{$v['str']}</a></li>"
                 : "<li><a href='{$v['url']}'>{$v['str']}</a></li>";
         }
 
         return $str;
+    }
+
+    /**
+     * 返回JSON数据
+     *
+     * @return string
+     */
+    public function arr()
+    {
+        $start    = max(1, min($this->selfPage - ceil($this->pageNum / 2), $this->totalPage - $this->pageNum));
+        $end      = min($this->pageNum + $start, $this->totalPage);
+        $pageList = ['pre' => ['url' => '', 'num' => 0], 'list' => [], 'next' => ['url' => '', 'num' => 0]];
+        //只有一页不显示页码
+        if ($end > 1) {
+            //上一页
+            if ($this->selfPage > 1 && $this->selfPage <= $this->totalPage) {
+                $num             = $this->selfPage - 1;
+                $pageList['pre'] = ['url' => $this->getUrl($num), 'num' => $num];
+            }
+            for ($i = $start; $i <= $end; $i++) {
+                if ($this->selfPage == $i) {
+                    $pageList['list'][$i]['url']     = '';
+                    $pageList['list'][$i]['num']     = $i;
+                    $pageList['list'][$i]['current'] = true;
+                    continue;
+                }
+                $pageList['list'][$i]['url']     = $this->getUrl($i);
+                $pageList['list'][$i]['num']     = $i;
+                $pageList['list'][$i]['current'] = false;
+            }
+            //下一页
+            if ($this->selfPage < $this->totalPage) {
+                $num              = $this->selfPage + 1;
+                $pageList['next'] = ['url' => $this->getUrl($num), 'num' => $num];
+            }
+        }
+
+        return $pageList;
     }
 
     //图标页码列表
@@ -358,9 +393,8 @@ class Base
     {
         $num = max(1, $this->selfPage - $this->pageNum);
 
-        return $this->selfPage > $this->pageNum ? "<li><a href='".$this->getUrl(
-                $num
-            )."' class='pres'>前{$this->pageNum}页</a></li>" : "";
+        return $this->selfPage > $this->pageNum ?
+            "<li><a href='".$this->getUrl($num)."' class='pres'>前{$this->pageNum}页</a></li>" : "";
     }
 
     //后几页
@@ -376,7 +410,7 @@ class Base
     //首页
     public function first()
     {
-        $first = $this->desc ['first'];
+        $first = $this->desc['first'];
 
         return $this->selfPage - $this->pageNum > 1 ? "<a page='1' href='".$this->getUrl(1)." class='first'>{$first}</a>" : "";
     }
@@ -384,7 +418,7 @@ class Base
     //末页
     public function end()
     {
-        $end = $this->desc ['end'];
+        $end = $this->desc['end'];
 
         return $this->selfPage < $this->totalPage - $this->pageNum ?
             "<a href='".$this->getUrl($this->totalPage)."' class='end' page='{$this->totalPage}'>{$end}</a>" : "";
@@ -397,6 +431,16 @@ class Base
         $end   = min($this->selfPage * $this->row, $this->totalRow); //当前页结束ID
 
         return "<span class='nowPage'>第{$start}-{$end}{$this->desc['unit']}</span>";
+    }
+
+    /**
+     * 总条数据
+     *
+     * @return mixed
+     */
+    public function totalRow()
+    {
+        return $this->totalRow;
     }
 
     //count统计

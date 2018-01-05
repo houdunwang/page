@@ -16,22 +16,26 @@ class Page
 {
     protected static $link = null;
 
-    public function __call($method, $params)
+    public static function single()
     {
         if (is_null(self::$link)) {
             self::$link = new Base();
         }
 
-        return call_user_func_array([self::$link, $method], $params);
+        return self::$link;
+    }
+
+    public function __call($method, $params)
+    {
+        return call_user_func_array([self::single(), $method], $params);
+    }
+    public function __toString()
+    {
+        return self::$link->__toString();
     }
 
     public static function __callStatic($name, $arguments)
     {
-        static $link;
-        if (is_null($link)) {
-            $link = new static();
-        }
-
-        return call_user_func_array([$link, $name], $arguments);
+        return call_user_func_array([self::single(), $name], $arguments);
     }
 }
